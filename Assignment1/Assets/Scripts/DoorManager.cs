@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class DoorManager : MonoBehaviour
 {
-    [SerializeField, Range(1, 100)]
-    private int TotalDoors = 1;
+    [SerializeField, Range(20, 100)]
+    private int TotalDoors = 20;
 
     [SerializeField]
     private GameObject DoorPrefab;
