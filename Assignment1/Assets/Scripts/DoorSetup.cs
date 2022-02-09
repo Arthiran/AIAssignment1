@@ -2,10 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomizeDoorPrefab : MonoBehaviour
+public class DoorSetup : MonoBehaviour
 {
     [SerializeField]
     private GameObject DoorOuter;
+
+    [HideInInspector]
+    public bool isSet = false;
+    [HideInInspector]
+    public bool isHot = false;
+    [HideInInspector]
+    public bool isNoisy = false;
+    [HideInInspector]
+    public bool isSafe = false;
 
     // Start is called before the first frame update
     void Start()
