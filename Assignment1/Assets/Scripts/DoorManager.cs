@@ -48,6 +48,7 @@ public class DoorManager : MonoBehaviour
     void Start()
     {
         ReadTextFile();
+        TotalDoors = PlayerPrefs.GetInt("DoorAmount");
 
         for (int i = 0; i < TotalDoors; i++)
         {
@@ -99,9 +100,14 @@ public class DoorManager : MonoBehaviour
 
     void ReadTextFile()
     {
-        string PathToFile = "G:\\AIForGaming\\AIAssignment1\\Assignment1\\Assets\\StreamingAssets\\probabilities.txt";
-
-        AllLines = File.ReadAllLines(PathToFile);
+        if (File.Exists(PlayerPrefs.GetString("FileLocation")))
+        {
+            AllLines = File.ReadAllLines(PlayerPrefs.GetString("FileLocation"));
+        }
+        else
+        {
+            AllLines = File.ReadAllLines(Application.streamingAssetsPath + "\\probabilities.txt");
+        }
     }
 
     void SetDoorValies(bool isHot, bool isNoisy, bool isSafe)
