@@ -111,10 +111,11 @@ public class DoorManager : MonoBehaviour
 
     void SetDoorValies(bool isHot, bool isNoisy, bool isSafe)
     {
-        int RandomInt = Random.Range(0, 20);
+        int RandomInt = Random.Range(0, TotalDoors);
 
         if (AllDoors[RandomInt].GetComponent<DoorSetup>().isSet == false)
         {
+            AllDoors[RandomInt].GetComponent<DoorSetup>().isSet = true;
             AllDoors[RandomInt].GetComponent<DoorSetup>().isHot = isHot;
             AllDoors[RandomInt].GetComponent<DoorSetup>().isNoisy = isNoisy;
             AllDoors[RandomInt].GetComponent<DoorSetup>().isSafe = isSafe;
