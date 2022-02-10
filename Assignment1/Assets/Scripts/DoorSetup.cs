@@ -21,4 +21,9 @@ public class DoorSetup : MonoBehaviour
     {
         DoorOuter.GetComponent<Renderer>().materials[1].color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
     }
+
+    private void OnMouseDown()
+    {
+        Debug.Log("Is Hot: " + isHot + " | Is Noisy: " + isNoisy + " | Is Safe: " + isSafe);
+    }
 }

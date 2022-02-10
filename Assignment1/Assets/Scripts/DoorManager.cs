@@ -43,7 +43,11 @@ public class DoorManager : MonoBehaviour
 
         for (int i = 1; i < AllLines.Length; i++)
         {
-            Debug.Log(AllLines[i]);
+            float Probability = float.Parse((AllLines[i].Substring(6)));
+            for (int j = 0; j < Mathf.RoundToInt(Probability * TotalDoors); j++)
+            {
+                SetDoorValies(AllLines[i][0] == 'Y' ? true : false, AllLines[i][2] == 'Y' ? true : false, AllLines[i][4] == 'Y' ? true : false);
+            }
         }    
 
         Vector3 NewPosition = FloorObject.transform.position;
@@ -103,5 +107,21 @@ public class DoorManager : MonoBehaviour
         string PathToFile = "G:\\AIForGaming\\AIAssignment1\\Assignment1\\Assets\\StreamingAssets\\probabilities.txt";
 
         AllLines = System.IO.File.ReadAllLines(PathToFile);
+    }
+
+    void SetDoorValies(bool isHot, bool isNoisy, bool isSafe)
+    {
+        int RandomInt = Random.Range(0, 20);
+
+        if (AllDoors[RandomInt].GetComponent<DoorSetup>().isSet == false)
+        {
+            AllDoors[RandomInt].GetComponent<DoorSetup>().isHot = isHot;
+            AllDoors[RandomInt].GetComponent<DoorSetup>().isNoisy = isNoisy;
+            AllDoors[RandomInt].GetComponent<DoorSetup>().isSafe = isSafe;
+        }
+        else 
+        {
+            SetDoorValies(isHot,isNoisy, isSafe);
+        }
     }
 }
