@@ -29,6 +29,9 @@ public class DoorManager : MonoBehaviour
 
     string[] AllLines;
 
+    [SerializeField]
+    private GameObject HotImageEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,7 +51,9 @@ public class DoorManager : MonoBehaviour
             {
                 SetDoorValies(AllLines[i][0] == 'Y' ? true : false, AllLines[i][2] == 'Y' ? true : false, AllLines[i][4] == 'Y' ? true : false);
             }
-        }    
+        }
+
+        UpdateDoor(CurrentDoor);
 
         Vector3 NewPosition = FloorObject.transform.position;
         NewPosition.x -= (3 * TotalDoors) - 3;
@@ -80,33 +85,11 @@ public class DoorManager : MonoBehaviour
         }
     }
 
-    public void IncrementCurrentDoor()
-    {
-        CurrentDoor++;
-
-        Vector3 NewPosition = Camera.main.transform.position;
-        NewPosition.x -= 6;
-        Camera.main.transform.position = NewPosition;
-
-        DoorNumberText.text = (CurrentDoor+1).ToString();
-    }
-
-    public void DecrementCurrentDoor()
-    {
-        CurrentDoor--;
-
-        Vector3 NewPosition = Camera.main.transform.position;
-        NewPosition.x += 6;
-        Camera.main.transform.position = NewPosition;
-
-        DoorNumberText.text = (CurrentDoor + 1).ToString();
-    }
-
     void ReadTextFile()
     {
         string PathToFile = "G:\\AIForGaming\\AIAssignment1\\Assignment1\\Assets\\StreamingAssets\\probabilities.txt";
 
-        AllLines = System.IO.File.ReadAllLines(PathToFile);
+        AllLines = File.ReadAllLines(PathToFile);
     }
 
     void SetDoorValies(bool isHot, bool isNoisy, bool isSafe)
@@ -124,5 +107,36 @@ public class DoorManager : MonoBehaviour
         {
             SetDoorValies(isHot,isNoisy, isSafe);
         }
+    }
+
+    public void IncrementCurrentDoor()
+    {
+        CurrentDoor++;
+
+        Vector3 NewPosition = Camera.main.transform.position;
+        NewPosition.x -= 6;
+        Camera.main.transform.position = NewPosition;
+
+        DoorNumberText.text = (CurrentDoor + 1).ToString();
+
+        UpdateDoor(CurrentDoor);
+    }
+
+    public void DecrementCurrentDoor()
+    {
+        CurrentDoor--;
+
+        Vector3 NewPosition = Camera.main.transform.position;
+        NewPosition.x += 6;
+        Camera.main.transform.position = NewPosition;
+
+        DoorNumberText.text = (CurrentDoor + 1).ToString();
+
+        UpdateDoor(CurrentDoor);
+    }
+
+    private void UpdateDoor(int _CurrentDoor)
+    {
+        HotImageEffect.SetActive(AllDoors[_CurrentDoor].GetComponent<DoorSetup>().isHot);
     }
 }
