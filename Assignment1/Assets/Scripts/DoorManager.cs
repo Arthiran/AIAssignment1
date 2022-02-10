@@ -32,6 +32,18 @@ public class DoorManager : MonoBehaviour
     [SerializeField]
     private GameObject HotImageEffect;
 
+    [SerializeField]
+    private ShakeCamera CameraShakeScript;
+
+    [SerializeField]
+    private AudioSource NoiseSoundEffect;
+
+    [SerializeField]
+    private GameObject EndScreen;
+
+    [SerializeField]
+    private Text EndConditionText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -116,6 +128,7 @@ public class DoorManager : MonoBehaviour
         Vector3 NewPosition = Camera.main.transform.position;
         NewPosition.x -= 6;
         Camera.main.transform.position = NewPosition;
+        CameraShakeScript.SetCameraLocation(NewPosition);
 
         DoorNumberText.text = (CurrentDoor + 1).ToString();
 
@@ -129,6 +142,7 @@ public class DoorManager : MonoBehaviour
         Vector3 NewPosition = Camera.main.transform.position;
         NewPosition.x += 6;
         Camera.main.transform.position = NewPosition;
+        CameraShakeScript.SetCameraLocation(NewPosition);
 
         DoorNumberText.text = (CurrentDoor + 1).ToString();
 
@@ -138,5 +152,27 @@ public class DoorManager : MonoBehaviour
     private void UpdateDoor(int _CurrentDoor)
     {
         HotImageEffect.SetActive(AllDoors[_CurrentDoor].GetComponent<DoorSetup>().isHot);
+        CameraShakeScript.shouldShake = AllDoors[_CurrentDoor].GetComponent<DoorSetup>().isNoisy;
+
+        if (AllDoors[_CurrentDoor].GetComponent<DoorSetup>().isNoisy)
+        {
+            NoiseSoundEffect.Play();
+        }
+        else
+        {
+            NoiseSoundEffect.Stop();
+        }
+    }
+
+    public void CheckDoor()
+    {
+        if (AllDoors[CurrentDoor].GetComponent<DoorSetup>().isSafe)
+        {
+            EndConditionText.text = "YOU ARE SAFE!";
+        }
+        else
+        {
+            EndConditionText.text = "YOU LOST!";
+        }
     }
 }
