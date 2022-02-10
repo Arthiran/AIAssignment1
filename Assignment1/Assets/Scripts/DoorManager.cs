@@ -1,3 +1,5 @@
+// Arthiran Sivarajah - 100660300
+// 2022/02/09
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -47,9 +49,12 @@ public class DoorManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Reads through given text file
         ReadTextFile();
+        //Gets amount of doors from menu scene
         TotalDoors = PlayerPrefs.GetInt("DoorAmount");
 
+        // Spawns in doors according to total amount
         for (int i = 0; i < TotalDoors; i++)
         {
             Vector3 NewVector = new Vector3(i * -6, 0, 0);
@@ -57,6 +62,7 @@ public class DoorManager : MonoBehaviour
             AllDoors.Add(NewDoor);
         }
 
+        // Reads through text files and sets door values (Hot, Noisy, Safe) based on probabilities from text file
         for (int i = 1; i < AllLines.Length; i++)
         {
             float Probability = float.Parse((AllLines[i].Substring(6)));
@@ -100,6 +106,7 @@ public class DoorManager : MonoBehaviour
 
     void ReadTextFile()
     {
+        // Checks if text file exists, otherwise use default
         if (File.Exists(PlayerPrefs.GetString("FileLocation")))
         {
             AllLines = File.ReadAllLines(PlayerPrefs.GetString("FileLocation"));
@@ -112,6 +119,7 @@ public class DoorManager : MonoBehaviour
 
     void SetDoorValies(bool isHot, bool isNoisy, bool isSafe)
     {
+        // Sets values of door, makes sure it isn't already set
         int RandomInt = Random.Range(0, TotalDoors);
 
         if (AllDoors[RandomInt].GetComponent<DoorSetup>().isSet == false)
@@ -129,6 +137,7 @@ public class DoorManager : MonoBehaviour
 
     public void IncrementCurrentDoor()
     {
+        // Goes to next door
         CurrentDoor++;
 
         Vector3 NewPosition = Camera.main.transform.position;
@@ -143,6 +152,7 @@ public class DoorManager : MonoBehaviour
 
     public void DecrementCurrentDoor()
     {
+        // Goes to previous door
         CurrentDoor--;
 
         Vector3 NewPosition = Camera.main.transform.position;
@@ -157,6 +167,7 @@ public class DoorManager : MonoBehaviour
 
     private void UpdateDoor(int _CurrentDoor)
     {
+        // Updates feedback according to door
         HotImageEffect.SetActive(AllDoors[_CurrentDoor].GetComponent<DoorSetup>().isHot);
         CameraShakeScript.shouldShake = AllDoors[_CurrentDoor].GetComponent<DoorSetup>().isNoisy;
 
@@ -172,6 +183,7 @@ public class DoorManager : MonoBehaviour
 
     public void CheckDoor()
     {
+        // Checks if door is safe or dangerous
         if (AllDoors[CurrentDoor].GetComponent<DoorSetup>().isSafe)
         {
             EndConditionText.text = "YOU ARE SAFE!";

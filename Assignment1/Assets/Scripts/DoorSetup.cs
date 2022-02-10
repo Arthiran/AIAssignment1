@@ -1,3 +1,5 @@
+// Arthiran Sivarajah - 100660300
+// 2022/02/09
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +21,7 @@ public class DoorSetup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Randomizes colours of prefabs
         DoorOuter.GetComponent<Renderer>().materials[1].color = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
     }
 }

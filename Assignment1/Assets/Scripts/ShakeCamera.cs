@@ -1,3 +1,5 @@
+// Arthiran Sivarajah - 100660300
+// 2022/02/09
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,12 +15,14 @@ public class ShakeCamera : MonoBehaviour
 
     private void Start()
     {
+        // Sets original Camera Location
         SetCameraLocation(transform.position);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Checks if door is noisy, starts coroutine for shaking
         if (shouldShake)
         {
             shouldShake = false;
@@ -32,6 +36,7 @@ public class ShakeCamera : MonoBehaviour
 
     private IEnumerator PlayCameraShake()
     {
+        // Uses an animation curve to shake camera position
         float elapsedTime = 0f;
         
         while (elapsedTime < duration)
